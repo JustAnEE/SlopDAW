@@ -19,27 +19,32 @@ project "DAW"
     filter "configurations:Debug"
         targetdir "build/bin/Debug"  -- Output directory for Debug
         objdir "build/obj/Debug"     -- Object files for Debug
+
         buildoptions { "-O0" }       -- Debug flags: no optimization, debug info
         symbols "On"               -- Enable symbols for Debug
         entrypoint "mainCRTStartup"  -- Explicitly set entry point to "main" for Debug configuration
 
-    -- Link libraries (common across configurations)
-    libdirs { "libraries/lib/" }
-    links {"glfw3", "opengl32"}
+        -- Link libraries (common across configurations)
+        libdirs { "libraries/lib/" }
+        links {"glfw3", "opengl32"}
 
-    -- Source and header files
-    files {
-       "src/**.cpp",   -- All .cpp files in src and subdirectories
-       "src/**.hpp",   -- All .hpp files in src and subdirectories
-       "src/**.h"      -- All .h files in src and subdirectories
-    }
+        -- Source and header files
+        files {
+        "libraries/include/imgui/**.h",
+        "libraries/include/imgui/**.cpp",
+        "libraries/include/GLFW/**.h",
+        "src/**.cpp",   -- All .cpp files in src and subdirectories
+        "src/**.hpp",   -- All .hpp files in src and subdirectories
+        "src/**.h"      -- All .h files in src and subdirectories
+        }
 
-    -- Include directories (common across configurations)
-    includedirs {
-	   "libraries/include/",
-       "libraries/include/imgui",
-	   "src/gui/include"
-    }
+        -- Include directories (common across configurations)
+        includedirs {
+        "libraries/include/",
+        "libraries/include/imgui",
+        "libraries/include/GLFW",
+        "src/gui/include"
+        }
 
     -- Release configuration settings
     filter "configurations:Release"
@@ -50,7 +55,7 @@ project "DAW"
             "-O3",               -- As agro as possible optimization without allowing undefined behaviour.
             "-flto",             -- Link time optimization 
             "-ftree-vectorize",  -- SIMD where possible 
-            "-march=native",	 -- Windows specific code (for now)
+            "-march=native",     -- Windows specific code (for now)
             "-ffast-math",       -- Risky, but worth it.
             "-fno-math-errno",   -- No worthless errno in std::cmath
             "-mavx2",            -- Even more SIMD where possible
@@ -65,21 +70,21 @@ project "DAW"
 
         -- Files 
         files {
-			"libraries/include/imgui/**.h",
-			"libraries/include/imgui/**.cpp",
-			"libraries/include/GLFW/**.h",
+            "libraries/include/imgui/**.h",
+            "libraries/include/imgui/**.cpp",
+            "libraries/include/GLFW/**.h",
             "src/**.cpp",   -- All .cpp files in src and subdirectories
             "src/**.hpp",   -- All .hpp files in src and subdirectories
             "src/**.h"      -- All .h files in src and subdirectories
         }
 
-    -- Include directories (common across configurations)
-    includedirs {
-		"libraries/include/",
-        "libraries/include/imgui",
-		"libraries/include/GLFW",
-		"src/gui/include"
-    }
+        -- Include directories (common across configurations)
+        includedirs {
+            "libraries/include/",
+            "libraries/include/imgui",
+            "libraries/include/GLFW",
+            "src/gui/include"
+        }
 
     -- Reset filter to avoid unintended configuration inheritance
     filter {}
