@@ -1,8 +1,8 @@
-#include "gui/include/tempgui.hpp"
+#include "./gui/include/SlopDawWindow.hpp"
 
 int main(void)
 {
-   TempGUI clTempApp;
-   clTempApp.ApplicationStart();
+   SlopDawWindow clWindow;
+   clWindow.ApplicationStart();
    return 0;
 }
