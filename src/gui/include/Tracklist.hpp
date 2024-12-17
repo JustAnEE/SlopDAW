@@ -13,7 +13,9 @@ public:
     void SetupTracklistChild();
 
 private:
-    const ImGuiWindowFlags configuration = 0;
+    const ImGuiWindowFlags windowConfiguration = 0;
+
+    const ImGuiChildFlags childConfiguration = 0;
 
 private:
     void PushStyle();

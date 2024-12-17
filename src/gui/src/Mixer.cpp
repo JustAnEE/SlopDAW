@@ -8,7 +8,7 @@ void Mixer::SetupMixerChild()
     ImVec2 size = ImVec2(availableSpace.y * 0.5f, availableSpace.y);
 
     this->PushStyle();
-    ImGui::BeginChild("Mixer", size, this->windowConfiguration);
+    ImGui::BeginChild("Mixer", size, this->childConfiguration, this->windowConfiguration);
         float sliderValue = 0; // Dummy value
 
         ImVec2 childSpace = ImGui::GetContentRegionAvail();

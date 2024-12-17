@@ -1,4 +1,5 @@
 #include "NavBar.hpp"
+#include <filesystem>
 
 void NavBar::SetupNavBarChild()
 {
@@ -6,22 +7,42 @@ void NavBar::SetupNavBarChild()
     ImVec2 size = ImVec2(availableSpace.x * 1.0f, availableSpace.y * 0.04f);
 
     this->PushStyle();
-    ImGui::BeginChild("NavBar", size, this->configuration);
+    ImGui::BeginChild("NavBar", size, this->childConfiguration, this->windowConfiguration);
         ImVec2 childSpace = ImGui::GetContentRegionAvail();
         float fontHeight = ImGui::GetFontSize();
         float offsetY = (childSpace.y - fontHeight) / 2.0f;
+        float center = ImGui::GetCursorPosY() + offsetY;
 
-        ImGui::SetCursorPosY(ImGui::GetCursorPosY() + offsetY);
+        //std::cout << std::filesystem::current_path();
 
-        ImGui::BeginTable("NavTable", 3, ImGuiTableFlags_SizingFixedFit);
+        int logo = GlfwApi::LoadTexture("..\\..\\SlopDAW\\content\\SDLogo.png");
+
+        ImGui::SetCursorPosY(center);
+
+        ImGui::BeginTable("NavTable", 4, this->tableConfiguration);
             ImGui::TableNextColumn();
-            ImGui::Text("SlopDaw Studios");
+            ImGui::BeginGroup();
+                ImGui::SetCursorPosY(0);
+                ImGui::Image(logo, ImVec2(50, 50));
+                ImGui::SameLine();
+                ImGui::SetCursorPosY(center);
+                ImGui::Text("SlopDaw Studios");
+            ImGui::EndGroup();
 
             ImGui::TableNextColumn();
-            ImGui::Button("Play");
+            ImGui::BeginGroup();
+                ImGui::Button("Play");
+                ImGui::SameLine();
+                ImGui::Button("Pause");
+                ImGui::SameLine();
+                ImGui::Text("00:00:00.00");
+            ImGui::EndGroup();
 
             ImGui::TableNextColumn();
-            ImGui::Button("Pause");
+            ImGui::Text("BPM 140");
+
+            ImGui::TableNextColumn();
+            ImGui::Text("metronome");
         ImGui::EndTable();
     ImGui::EndChild();
     this->PopStyle();

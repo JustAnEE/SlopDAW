@@ -33,6 +33,7 @@ project "DAW"
         "libraries/include/imgui/**.h",
         "libraries/include/imgui/**.cpp",
         "libraries/include/GLFW/**.h",
+        "libraries/include/stb_image.h",
         "src/**.cpp",   -- All .cpp files in src and subdirectories
         "src/**.hpp",   -- All .hpp files in src and subdirectories
         "src/**.h"      -- All .h files in src and subdirectories
@@ -73,6 +74,7 @@ project "DAW"
             "libraries/include/imgui/**.h",
             "libraries/include/imgui/**.cpp",
             "libraries/include/GLFW/**.h",
+            "libraries/include/stb_image.h",
             "src/**.cpp",   -- All .cpp files in src and subdirectories
             "src/**.hpp",   -- All .hpp files in src and subdirectories
             "src/**.h"      -- All .h files in src and subdirectories

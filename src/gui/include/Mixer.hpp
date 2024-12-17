@@ -17,6 +17,8 @@ private:
         | ImGuiWindowFlags_NoScrollbar
         ;
 
+    const ImGuiChildFlags childConfiguration = 0;
+
     const ImGuiSliderFlags sliderConfiguration = 0
         | ImGuiSliderFlags_Logarithmic
         | ImGuiSliderFlags_ClampOnInput

@@ -6,7 +6,7 @@ void Tracklist::SetupTracklistChild()
     ImVec2 size = ImVec2(availableSpace.x * 1.0f, availableSpace.y * 0.75f);
 
     this->PushStyle();
-    ImGui::BeginChild("Tracklist", size, this->configuration);
+    ImGui::BeginChild("Tracklist", size, this->childConfiguration, this->windowConfiguration);
         ImGui::Text("Tracklist");
     ImGui::EndChild();
     this->PopStyle();

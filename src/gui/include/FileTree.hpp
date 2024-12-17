@@ -13,11 +13,14 @@ public:
     void SetupFileTreeChild();
 
 private:
-    const ImGuiWindowFlags configuration = 0;
+    const ImGuiWindowFlags windowConfiguration = 0;
+
+    const ImGuiChildFlags childConfiguration = 0;
 
 private:
     void PushStyle();
     void PopStyle();
+    void ActivateTree(const char* name, void* options);
 };
 
 #endif //!FILETREE_HPP
