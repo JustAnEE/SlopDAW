@@ -150,23 +150,19 @@ void Tracklist::RenderGrid(ImVec2 origin, ImVec2 size)
     {
         ImU32 color = i % 2 == 0 ? oceanBlue : stoneBlue;
 
-        float x1 = std::max(
-            origin.x + labelWidthOffset,
-            origin.x + labelWidthOffset + (barLength * i) - this->posOffset.x);
+        int bar = i * 4;
+
+        std::string str = std::format("{}", bar);
+        const char* cstr = str.c_str();
+        ImVec2 textSize = ImGui::CalcTextSize(cstr);
+
+        float x1 = std::max(origin.x + labelWidthOffset, origin.x + labelWidthOffset + (barLength * i) - this->posOffset.x);
         float y1 = origin.y + barNumberHeightOffset;
 
         float x2 = origin.x + labelWidthOffset + (barLength * (i + 1)) - this->posOffset.x;
         float y2 = origin.y + size.y;
 
-        // Text
-        int bar = (i + 1) * 4;
-
-        std::string str = std::format("{}", bar);
-        const char* cstr = str.c_str();
-
-        ImVec2 textSize = ImGui::CalcTextSize(cstr);
-
-        float tx = x2 - textSize.x / 2.0f;
+        float tx = origin.x + labelWidthOffset + (barLength * i) - this->posOffset.x - textSize.x / 2.0f;
         float ty = y1 - textSize.y - 2.0f;
 
         if(x2 > origin.x + labelWidthOffset)
@@ -174,7 +170,7 @@ void Tracklist::RenderGrid(ImVec2 origin, ImVec2 size)
             drawList->AddRectFilled(ImVec2(x1, y1), ImVec2(x2, y2), color);
         }
 
-        if(tx > origin.x + labelWidthOffset + borderLineThickness)
+        if(tx > origin.x + labelWidthOffset - textSize.x)
         {
             drawList->AddText(ImVec2(tx, ty), black, cstr);
         }
@@ -187,24 +183,36 @@ void Tracklist::RenderGrid(ImVec2 origin, ImVec2 size)
     drawList->AddLine(ImVec2(origin.x, origin.y + size.y),          ImVec2(origin.x, origin.y),                   black, borderLineThickness);
 
     // Grid Borders
-    drawList->AddLine(ImVec2(origin.x + labelWidthOffset, origin.y + barNumberHeightOffset), ImVec2(origin.x + labelWidthOffset + barTotalWidth, origin.y + barNumberHeightOffset), black, borderLineThickness);
+    drawList->AddLine(ImVec2(origin.x, origin.y + barNumberHeightOffset),                    ImVec2(origin.x + labelWidthOffset + barTotalWidth, origin.y + barNumberHeightOffset), black, borderLineThickness);
     drawList->AddLine(ImVec2(origin.x + labelWidthOffset, origin.y + barNumberHeightOffset), ImVec2(origin.x + labelWidthOffset, origin.y + size.y),                                black, borderLineThickness);
 
-    // Horizontal Lines
+    // Track Lines and Labels
     for(int i = 0; i <= trackCount; i ++)
     {
-        float x1 = origin.x + labelWidthOffset;
+        std::string str = std::format("Track {}", i);
+        const char* cstr = str.c_str();
+        ImVec2 textSize = ImGui::CalcTextSize(cstr);
+
+        float x1 = origin.x;
         float x2 = origin.x + labelWidthOffset + barTotalWidth;
 
         float y = origin.y + barNumberHeightOffset + (trackHeight * (i + 1)) - this->posOffset.y;
+
+        float tx = x1 + textSize.x / 2.0f;
+        float ty = y - textSize.y - 2.0f;
 
         if (y > origin.y + barNumberHeightOffset + borderLineThickness)
         {
             drawList->AddLine(ImVec2(x1, y), ImVec2(x2, y), black, borderLineThickness);
         }
+
+        if(y > origin.y + barNumberHeightOffset + textSize.y)
+        {
+            drawList->AddText(ImVec2(tx, ty), oceanBlue, cstr);
+        }
     }
 
-    // Vertical Lines
+    // Beat Lines
     for (int i = 0; i <= barCount * beatsPerBar; i++)
     {
         ImU32 color = (i % 4 == 0) ? black : darkGrey;
