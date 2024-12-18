@@ -13,8 +13,6 @@ void NavBar::SetupNavBarChild()
         float offsetY = (childSpace.y - fontHeight) / 2.0f;
         float center = ImGui::GetCursorPosY() + offsetY;
 
-        //std::cout << std::filesystem::current_path();
-
         int logo = GlfwApi::LoadTexture("..\\..\\SlopDAW\\content\\SDLogo.png");
 
         ImGui::SetCursorPosY(center);

@@ -10,18 +10,16 @@ void FileTree::SetupFileTreeChild()
         ImGui::Text("filetree");
 
         ImGui::BeginGroup();
+            ImGui::Text("Local Project");
+            this->ActivateTree("Loaded Sounds", nullptr);
+        ImGui::EndGroup();
+
+        ImGui::BeginGroup();
             ImGui::Text("Library");
             this->ActivateTree("All", nullptr);
             this->ActivateTree("Sounds", nullptr);
             this->ActivateTree("Instruments", nullptr);
             this->ActivateTree("Plugins", nullptr);
-            this->ActivateTree("Samples", nullptr);
-        ImGui::EndGroup();
-
-        ImGui::BeginGroup();
-            ImGui::Text("Local Environment");
-            this->ActivateTree("Current Project", nullptr);
-            this->ActivateTree("Projects", nullptr);
         ImGui::EndGroup();
 
     ImGui::EndChild();

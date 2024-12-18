@@ -25,7 +25,7 @@ private:
         | ImGuiWindowFlags_NoScrollbar
         | ImGuiWindowFlags_NoScrollWithMouse
         | ImGuiWindowFlags_NoCollapse
-        //| ImGuiWindowFlags_NoBackground
+        | ImGuiWindowFlags_NoBackground
         | ImGuiWindowFlags_NoNavInputs
         | ImGuiWindowFlags_NoNav
         ;
