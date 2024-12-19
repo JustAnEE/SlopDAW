@@ -13,7 +13,7 @@ This project uses the premake build system.
 ### Step 1: Clone the repository
 
 ```bash
-git clone https://github.com/JustAnEE/OfflineSDR
+git clone https://github.com/JustAnEE/SlopDAW
 ```
 
 ### Step 2: Install Premake 

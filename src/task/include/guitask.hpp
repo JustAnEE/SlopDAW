@@ -2,6 +2,7 @@
 #define GUI_TASK_HPP
 
 #include "taskbase.hpp"
+#include "MainLayout.hpp"
 
 // Forward declarations 
 struct ShutDownMessage;
@@ -22,6 +23,10 @@ class GUITask
 
       BOOL Init() override;
       void RespondToShutDown(const std::shared_ptr<ShutDownMessage>& pstShutDown_) override;
+
+   private:
+      MainLayout tracklist;
+
 
 };
 
