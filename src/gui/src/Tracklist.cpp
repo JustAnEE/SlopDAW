@@ -208,7 +208,7 @@ void Tracklist::RenderGrid(ImVec2 origin, ImVec2 size)
 
         if(y > origin.y + barNumberHeightOffset + textSize.y)
         {
-            drawList->AddText(ImVec2(tx, ty), oceanBlue, cstr);
+            drawList->AddText(ImVec2(tx, ty), black, cstr);
         }
     }
 
