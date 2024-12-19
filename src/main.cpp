@@ -1,10 +1,9 @@
-#include "./gui/include/SlopDawWindow.hpp"
-#include "./gui/include/tempgui.hpp"
+#include "taskspawner.hpp"
 
 int main(void)
 {
-   //TempGUI clWindow;
-   SlopDawWindow clWindow;
-   clWindow.ApplicationStart();
+   
+
+   TaskSpawner<TaskTable::N>::StartTasks();
    return 0;
 }
