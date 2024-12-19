@@ -43,7 +43,12 @@ project "DAW"
         "libraries/include/",
         "libraries/include/imgui",
         "libraries/include/GLFW",
-        "src/gui/include"
+        "src/gui/include",
+        "src/task/include",
+        "src/utils/include",
+        "src/datapool/include",
+        "src/messages/include",
+        "src/os/include"
         }
 
     -- Release configuration settings
@@ -83,7 +88,12 @@ project "DAW"
             "libraries/include/",
             "libraries/include/imgui",
             "libraries/include/GLFW",
-            "src/gui/include"
+            "src/gui/include",
+            "src/task/include",
+            "src/utils/include",
+            "src/datapool/include",
+            "src/messages/include",
+            "src/os/include"
         }
 
     -- Reset filter to avoid unintended configuration inheritance

@@ -1,8 +1,9 @@
-#include "gui/include/tempgui.hpp"
+#include "taskspawner.hpp"
 
 int main(void)
 {
-   TempGUI clTempApp;
-   clTempApp.ApplicationStart();
+   
+
+   TaskSpawner<TaskTable::N>::StartTasks();
    return 0;
 }
