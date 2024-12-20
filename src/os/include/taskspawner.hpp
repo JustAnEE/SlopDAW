@@ -3,6 +3,7 @@
 
 #include <thread>
 #include <utility>
+#include <vector>
 
 #include "taskbase.hpp"
 #include "enums.hpp"

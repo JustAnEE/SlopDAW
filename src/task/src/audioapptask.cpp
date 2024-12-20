@@ -2,7 +2,6 @@
 #include "shutdownmessage.hpp"
 #include "taskspawner.hpp"
 #include "datapool.hpp"
-#include "tasktable.hpp"
 
 BOOL 
 AudioAppTask::Init()
@@ -24,3 +23,4 @@ AudioAppTask::RespondToShutDown(
    bMyContinueRunning = !pstShutDown_->bShutDown;
    return;
 }
+

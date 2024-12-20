@@ -1,15 +1,16 @@
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include <GLFW/glfw3.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "guitask.hpp"
 #include "datapool.hpp"
 #include "shutdownmessage.hpp"
 #include "taskspawner.hpp"
 
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-
-#include <stdio.h>
-#include <GLFW/glfw3.h>
-#include <stdlib.h>
 
 static void ErrorCallbackCrash(int error, const char* description)
 {
@@ -75,10 +76,11 @@ GUITask::Main()
       if (glfwWindowShouldClose(window))
       {
          std::shared_ptr<ShutDownMessage> pstShutDown;
-         GetDataPoolInstance<ShutDownMessage>()->Acquire(pstShutDown);
-
-         pstShutDown->bShutDown = TRUE;
-         GetDataPoolInstance<ShutDownMessage>()->Publish(pstShutDown);
+         if(GetDataPoolInstance<ShutDownMessage>()->Acquire(pstShutDown))
+         {
+            pstShutDown->bShutDown = TRUE;
+            GetDataPoolInstance<ShutDownMessage>()->Publish(pstShutDown);
+         }
       }
 
       // Poll and handle events (inputs, window resize, etc.)

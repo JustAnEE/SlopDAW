@@ -10,37 +10,38 @@ template<typename Data>
 requires BasicConcepts::POD<Data>
 class MessagePool
 {
-public:
+   private:
 
-   struct RawMessage
-   {
-      RawMessage()
+      struct RawMessage
       {
-         bAvailable = TRUE;
-      }
+         RawMessage()
+         {
+            bAvailable = TRUE;
+         }
 
-      Data stData;
-      BOOL bAvailable; // !TODO: Atomic ?? 
-   };
+         Data stData;
+         BOOL bAvailable; // !TODO: Atomic ?? 
+      };
 
-   struct ReleaseRawMessage
-   {
-      ReleaseRawMessage()
+      struct ReleaseRawMessage
       {
-         pvMessagePoolRef = &vMessagePool;
-         ulMessageIdx = 0;
-         return;
-      }
+         ReleaseRawMessage()
+         {
+            pvMessagePoolRef = &vMessagePool;
+            ulMessageIdx = 0;
+            return;
+         }
+      
+         void operator()(Data*) const noexcept
+         {
 
-      void operator()(Data*) const noexcept
-      {
-         (*pvMessagePoolRef)[ulMessageIdx].bAvailable = TRUE;
-         return;
-      }
-
-      std::vector<RawMessage>* pvMessagePoolRef;
-      ULONG ulMessageIdx;
-   };
+            (*pvMessagePoolRef)[ulMessageIdx].bAvailable = TRUE;
+            return;
+         }
+      
+         std::vector<RawMessage>* pvMessagePoolRef;
+         ULONG ulMessageIdx;
+      };
 
    public:
 

@@ -21,8 +21,6 @@ class AudioAppTask
 
       BOOL Init() override;
       void RespondToShutDown(const std::shared_ptr<ShutDownMessage>& pstShutDown_) override;
-
-
 };
 #endif 
 
