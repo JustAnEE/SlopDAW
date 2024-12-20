@@ -1,5 +1,4 @@
 #include "Tracklist.hpp"
-#include <iostream>
 
 void Tracklist::SetupTracklistChild()
 {
@@ -13,14 +12,33 @@ void Tracklist::SetupTracklistChild()
             this->OnInitialization(ImVec2(0, 0));
         }
 
-        this->HandleMouseClick();
-        this->HandleMouseDrag();
-        this->HandleMouseScroll();
-
         this->RenderTracklist();
 
     ImGui::EndChild();
     this->PopStyle();
+}
+
+MouseEvent Tracklist::SendMouseEvent(MouseEvent e)
+{
+    // Propagate to TrackData
+
+    if (e.targetElementId == 0 && !e.stopPropagation && e.mouseEventType == EventEnum::MOUSE_CLICK)
+    {
+        this->HandleMouseClick(e);
+    }
+    if ((e.targetElementId == 0 || e.targetElementId == 1) // TODO: Refactor Elements base classes
+        && !e.stopPropagation
+        && e.mouseEventType == EventEnum::MOUSE_DRAG)
+    {
+        this->HandleMouseDrag(e);
+    }
+    
+    //if (e.targetElementId == 0 && !e.stopPropagation&& e.mouseEventType == EventEnum::SCROLL)
+    //{
+    //    this->HandleMouseScroll();
+    //}
+
+    return e;
 }
 
 void Tracklist::OnInitialization(ImVec2 initPos)
@@ -29,54 +47,45 @@ void Tracklist::OnInitialization(ImVec2 initPos)
     this->posOffset = initPos;
 }
 
-void Tracklist::HandleMouseClick()
+void Tracklist::HandleMouseClick(MouseEvent e)
 {
-    bool isOnitem = false;
-
-    // Item selection
-    if (ImGui::IsMouseClicked(ImGuiMouseButton_Left) && isOnitem)
-    {
-        this->isItemSelected = true;
-        // TODO:
-    }
-    else
-    {
-        this->isItemSelected = false;
-    }
+    // TODO:
 }
 
-void Tracklist::HandleMouseDrag()
+void Tracklist::HandleMouseDrag(MouseEvent e)
 {
     ImVec2 windowPos = ImGui::GetWindowPos();
     float sensitivity = -1.0f;
 
-    // Place Selected Pattern
-    if (ImGui::IsMouseDragging(ImGuiMouseButton_Right))
+    // Persistant Event.
+    e.targetElementId = 1;
+
+    // Place Pattern in Grid
+    if (e.mouseButtonBitmask & 0b100) // Right Mouse
     {
         // TODO:
     }
 
-    // Move Around Screen
-    if (ImGui::IsMouseDragging(ImGuiMouseButton_Left) && !this->isItemSelected)
+    // Move Around Grid
+    if (e.mouseButtonBitmask & 0b1) // Left Mouse
     {
-        ImVec2 dragDelta = ImGui::GetMouseDragDelta();
+        ImVec2 dragDelta = ImGui::GetMouseDragDelta(); // Add to event.
         float x = std::max(0.0f, this->posOffset.x + (dragDelta.x * sensitivity));
         float y = std::max(0.0f, this->posOffset.y + (dragDelta.y * sensitivity));
 
         this->posOffset = ImVec2(x, y);
-        ImGui::ResetMouseDragDelta();
-    }
-
-
-    // Move Item Around
-    if(ImGui::IsMouseDragging(ImGuiMouseButton_Left) && this->isItemSelected)
-    {
-        // TODO:
+        ImGui::ResetMouseDragDelta(); // Add flag to event.
     }
 }
 
-void Tracklist::HandleMouseScroll()
+void Tracklist::HandleMouseRelease(MouseEvent e)
 {
+    e.targetElementId = 0;
+}
+
+void Tracklist::HandleMouseScroll(MouseEvent e)
+{
+    // TODO:
     ImGuiIO& io = ImGui::GetIO();
     bool isZoomingIn = io.MouseWheel > 0.0f;
     bool isZoomingOut = io.MouseWheel < 0.0f;

@@ -13,7 +13,8 @@ void NavBar::SetupNavBarChild()
         float offsetY = (childSpace.y - fontHeight) / 2.0f;
         float center = ImGui::GetCursorPosY() + offsetY;
 
-        int logo = GlfwApi::LoadTexture("..\\..\\SlopDAW\\content\\SDLogo.png");
+        // TODO: load once....
+        //int logo = GlfwApi::LoadTexture("..\\..\\SlopDAW\\content\\SDLogo.png");
 
         ImGui::SetCursorPosY(center);
 
@@ -21,7 +22,7 @@ void NavBar::SetupNavBarChild()
             ImGui::TableNextColumn();
             ImGui::BeginGroup();
                 ImGui::SetCursorPosY(0);
-                ImGui::Image(logo, ImVec2(50, 50));
+                //ImGui::Image(logo, ImVec2(50, 50));
                 ImGui::SameLine();
                 ImGui::SetCursorPosY(center);
                 ImGui::Text("SlopDaw Studios");

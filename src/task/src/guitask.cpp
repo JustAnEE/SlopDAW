@@ -11,6 +11,8 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 
+#include "EventDispatcher.hpp"
+
 static void ErrorCallbackCrash(int error, const char* description)
 {
    fprintf(stderr, "GLFW Error %d: %s\n", error, description);
@@ -67,6 +69,7 @@ GUITask::Main()
 
    // System Variables
    int display_w, display_h;
+   EventDispatcher dispatcher = EventDispatcher();
 
    // State Variables
    ImVec4 clear_color = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
@@ -90,8 +93,12 @@ GUITask::Main()
       ImGui_ImplGlfw_NewFrame();
       ImGui::NewFrame();
 
+      // Event Handling
+      MouseEvent e = dispatcher.GetMouseEvent();
+
       // Content
       this->tracklist.SetupMainLayout();
+      this->tracklist.SendMouseEvent(e);
 
       // Rendering
       ImGui::Render();

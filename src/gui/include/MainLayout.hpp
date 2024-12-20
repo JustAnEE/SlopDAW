@@ -7,6 +7,7 @@
 #include "FileTree.hpp"
 #include "Tracklist.hpp"
 #include "Mixer.hpp"
+#include "MouseEvent.hpp"
 
 class MainLayout
 {
@@ -16,6 +17,8 @@ public:
 
 public:
     void SetupMainLayout();
+
+    MouseEvent SendMouseEvent(MouseEvent e);
 
 private:
     const ImGuiWindowFlags configuration = 0

@@ -5,6 +5,7 @@
 #include <string>
 
 #include "imgui.h"
+#include "MouseEvent.hpp"
 
 class Tracklist
 {
@@ -14,6 +15,8 @@ public:
 
 public:
     void SetupTracklistChild();
+
+    MouseEvent SendMouseEvent(MouseEvent e);
 
 private:
     const ImGuiWindowFlags windowConfiguration = 0;
@@ -28,9 +31,10 @@ private:
     void OnInitialization(ImVec2 initPos);
 
     // UI IO METHODS
-    void HandleMouseClick();
-    void HandleMouseDrag();
-    void HandleMouseScroll();
+    void HandleMouseClick(MouseEvent e);
+    void HandleMouseDrag(MouseEvent e);
+    void HandleMouseRelease(MouseEvent e);
+    void HandleMouseScroll(MouseEvent e);
 
     // UI RENDER METHODS
     void PushStyle();

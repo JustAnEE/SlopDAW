@@ -28,6 +28,22 @@ void MainLayout::SetupMainLayout()
     this->PopStyle();
 }
 
+MouseEvent MainLayout::SendMouseEvent(MouseEvent e)
+{
+    if (e.targetElementId == 0 && !e.stopPropagation)
+    {
+        e = this->tracklist.SendMouseEvent(e);
+    }
+
+    if(e.targetElementId == 0 && !e.stopPropagation)
+    {
+        // TODO: IMPLEMENT
+        //e = this->mixer.SendMouseEvent(e);
+    }
+
+    return e;
+}
+
 void MainLayout::PushStyle() /* private */
 {
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));

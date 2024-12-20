@@ -1,6 +1,7 @@
 #ifndef TASK_SPAWNER_HPP
 #define TASK_SPAWNER_HPP
 
+#include <vector>
 #include <thread>
 #include <utility>
 
