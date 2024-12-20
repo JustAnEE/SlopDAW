@@ -1,8 +1,8 @@
 #ifndef DATA_POOL_HPP
 #define DATA_POOL_HPP
 
-#include "templates.hpp"
-#include <mutex>
+#include "messagepool.hpp"
+#include <vector>
 
 template<typename Data> 
 struct CallBackTypeAlias 
@@ -45,6 +45,13 @@ class DataPool
       {
          ImplType::PublishImplementation(pstData_);
          return;
+      }
+      
+      template<typename Data>
+      static BOOL Acquire(
+         std::shared_ptr<Data>& pstData_)
+      {
+         return MessagePool<Data>::AcquireDataImplementation(pstData_);
       }
    
    protected:

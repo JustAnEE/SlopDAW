@@ -26,6 +26,19 @@ struct TaskTypeAlias<TaskIDEnum::GUI_TASK>
 };
 
 
+// Shared pointer deleter for static objects. 
+// Tasks are statically allocated, therefore shared objects
+// should *not* have control over their deallocation.
+struct DoNothingDeleter
+{
+   template<typename T>
+   void operator()(T*) const noexcept
+   {
+      return;
+   }
+};
+
+
 template<typename Task>
 class TaskFactory
 {
@@ -38,7 +51,7 @@ std::shared_ptr<Task>
 TaskFactory<Task>::InstantiateTask()
 {
    static Task clTask = {};
-   return std::shared_ptr<Task>(&clTask);
+   return std::shared_ptr<Task>(&clTask, DoNothingDeleter{});
 };
 
 template<ULONG N, std::size_t... Idcs>
@@ -60,7 +73,6 @@ SpawnTasks()
 }
 
 
-template<ULONG N = TaskTable::N>
 class TaskSpawner 
 {
    public:
@@ -68,7 +80,7 @@ class TaskSpawner
       static void StartTasks()
       {
          std::vector<std::thread> vtTaskThreads;
-         apclMyTasks = SpawnTasks<N>();
+         apclMyTasks = SpawnTasks<TaskTable::N>();
          for (std::shared_ptr<TaskBase>  pclTask_ : apclMyTasks)
          {
             pclTask_->InitTask();
@@ -110,7 +122,7 @@ class TaskSpawner
 
    private:
       // Inline required 
-      inline static std::array<std::shared_ptr<TaskBase>, N> apclMyTasks = {};
+      inline static std::array<std::shared_ptr<TaskBase>, TaskTable::N> apclMyTasks = {};
 };
 
 #endif 

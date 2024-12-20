@@ -22,7 +22,7 @@ BOOL
 GUITask::Init()
 {
    // !TODO: This should be hidden from the user :)
-   std::weak_ptr<GUITask> pclTaskHandle = TaskSpawner<TaskTable::N>::GetSharedTaskHandle<GUITask>(TaskIDEnum::GUI_TASK);
+   std::weak_ptr<GUITask> pclTaskHandle = TaskSpawner::GetSharedTaskHandle<GUITask>(TaskIDEnum::GUI_TASK);
    if(pclTaskHandle.lock())
    {
       GetDataPoolInstance<ShutDownMessage>()->RegisterCallBack(&GUITask::RespondToShutDown, pclTaskHandle);
@@ -70,9 +70,17 @@ GUITask::Main()
 
    // State Variables
    ImVec4 clear_color = ImVec4(0.15f, 0.15f, 0.15f, 1.00f);
-
-   while (!glfwWindowShouldClose(window))
+   while (bMyContinueRunning.load())
    {
+      if (glfwWindowShouldClose(window))
+      {
+         std::shared_ptr<ShutDownMessage> pstShutDown;
+         GetDataPoolInstance<ShutDownMessage>()->Acquire(pstShutDown);
+
+         pstShutDown->bShutDown = TRUE;
+         GetDataPoolInstance<ShutDownMessage>()->Publish(pstShutDown);
+      }
+
       // Poll and handle events (inputs, window resize, etc.)
            // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
            // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application, or clear/overwrite your copy of the mouse data.
@@ -121,6 +129,7 @@ void
 GUITask::RespondToShutDown(
    const std::shared_ptr<ShutDownMessage>& pstShutDown_)
 {
+   bMyContinueRunning = !pstShutDown_->bShutDown;
    return;
 }
 
