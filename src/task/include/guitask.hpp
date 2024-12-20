@@ -25,6 +25,7 @@ class GUITask
       void RespondToShutDown(const std::shared_ptr<ShutDownMessage>& pstShutDown_) override;
 
    private:
+
       MainLayout tracklist;
 
 

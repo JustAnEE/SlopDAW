@@ -2,8 +2,6 @@
 
 int main(void)
 {
-   
-
-   TaskSpawner<TaskTable::N>::StartTasks();
+   TaskSpawner::StartTasks();
    return 0;
 }
